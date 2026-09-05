@@ -8,13 +8,13 @@ export component AppWindow inherits Window {
   Image {
     opacity: 0.28;
     width: root.width;
-    source: @image-url("../assets/vhs_filter.jpg");
-    z: 999; // ensure the image is on top of others
+    source: @image-url("../assets/images/vhs_filter.jpg");
+    z: 999; // ensure this element is on top of others
   }
 
   Image {
     height: (root.height / 1px) * 1px;
-    source: @image-url("../assets/background2.jpg");
+    source: @image-url("../assets/images/background2.jpg");
   }
 
   VerticalLayout {
