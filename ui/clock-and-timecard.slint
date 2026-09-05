@@ -1,0 +1,121 @@
+export component TimeClock inherits Rectangle{
+  tc-area := TouchArea {
+    mouse-cursor: not-allowed;
+  }
+
+  property <length> x-dynm: tc-area.has-hover ? (200px - tc-area.mouse-x) * 0.1 - 3px : 0px;
+  property <length> y-dynm: tc-area.has-hover ? (200px - tc-area.mouse-y) * 0.1 - 3px : 0px;
+
+  tc-img := Image{
+    x: x-dynm;
+    y: y-dynm;
+
+    // width: tc-area.has-hover ? 300px + 10px : 300px;
+    width: 300px;
+    source: @image-url("../assets/rect_clock.png");
+
+    // animate width {
+    //   duration: 74ms;
+    // }
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+
+  width: tc-img.width;
+  height: tc-img.height;
+
+  // drop shadow
+  Rectangle {
+    drop-shadow-color: black;
+    drop-shadow-blur: 23px;
+
+    x: x-dynm;
+    y: y-dynm;
+    z: -1;
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+
+  // inner shadow
+  Rectangle {
+    width: tc-img.width;
+    height: tc-img.height;
+
+    x: x-dynm;
+    y: y-dynm;
+
+    inner-shadow-blur: 62px;
+    inner-shadow-color: black;
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+}
+
+export component Timecard inherits Rectangle {
+  tm-area := TouchArea {
+    mouse-cursor: pointer;
+  }
+
+  property <length> x-dynm: tm-area.has-hover ? (200px - tm-area.mouse-x) * 0.1 - 3px : 0px;
+  property <length> y-dynm: tm-area.has-hover ? (200px - tm-area.mouse-y) * 0.1 - 3px : 0px;
+
+  tm-img := Image {
+    x: x-dynm;
+    y: y-dynm;
+
+    width: tm-area.has-hover ? 200px + 10px : 200px;
+    source: @image-url("../assets/timecard.jpg");
+
+    // animate width {
+    //   duration: 74ms;
+    // }
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+
+  width: tm-img.width;
+  height: tm-img.height;
+
+  // drop shadow
+  Rectangle {
+    drop-shadow-color: black;
+    drop-shadow-blur: 23px;
+
+    x: x-dynm;
+    y: y-dynm;
+    z: -1;
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+
+  Rectangle {
+    width: tm-img.width;
+    height: tm-img.height;
+
+    x: x-dynm;
+    y: y-dynm;
+
+    inner-shadow-blur: 62px;
+    inner-shadow-color: black;
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+}

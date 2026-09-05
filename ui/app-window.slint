@@ -1,0 +1,40 @@
+import { TimeClock, Timecard } from "clock-and-timecard.slint";
+import { Animation } from "animations.slint";
+
+export component AppWindow inherits Window {
+  width: 600px;
+  height: 500px;
+
+  Image {
+    opacity: 0.28;
+    width: root.width;
+    source: @image-url("../assets/vhs_filter.jpg");
+    z: 999; // ensure the image is on top of others
+  }
+
+  Image {
+    height: (root.height / 1px) * 1px;
+    source: @image-url("../assets/background2.jpg");
+  }
+
+  VerticalLayout {
+    padding: 8px;
+    alignment: center;
+    HorizontalLayout  {
+      height: root.height / 1.5;
+      spacing: 50px;
+      padding: 8px;
+      alignment: center;
+
+      // time clock
+      TimeClock {
+        transform-rotation: Animation.sway-idle1;
+      }
+
+      // timecard
+      Timecard {
+        transform-rotation: Animation.sway-idle2;
+      }
+    }
+  }
+}
