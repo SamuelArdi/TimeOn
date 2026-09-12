@@ -1,5 +1,6 @@
-.cache/*
+.cache/**
 .vscode/*
 
-tests/*
+tests/**
 build/*
+cmake-build-debug/*

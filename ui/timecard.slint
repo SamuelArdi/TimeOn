@@ -1,0 +1,67 @@
+import "../assets/fonts/batangche.ttf";
+
+export component Timecard inherits Rectangle {
+  width: tm-img.width;
+  height: tm-img.height;
+
+  tm-area := TouchArea {
+    mouse-cursor: pointer;
+  }
+
+  property <length> x-dynm: tm-area.has-hover ? (200px - tm-area.mouse-x) * 0.1 - 3px : 0px;
+  property <length> y-dynm: tm-area.has-hover ? (200px - tm-area.mouse-y) * 0.1 - 3px : 0px;
+
+  // drop shadow
+  Rectangle {
+    drop-shadow-color: black;
+    drop-shadow-blur: 23px;
+
+    x: x-dynm;
+    y: y-dynm;
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+
+  tm-img := Image {
+    x: x-dynm;
+    y: y-dynm;
+
+    width: 200px;
+    source: @image-url("../assets/images/timecard.jpg");
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+
+  tm-no := Text {
+    x: (tm-img.x + tm-img.width) - 58px;
+    y: tm-img.y - 8px;
+
+    text: "000";
+    font-family: "BatangChe";
+
+    font-size: 35px;
+  }
+
+  // inner shadow
+  Rectangle {
+    width: tm-img.width;
+    height: tm-img.height;
+
+    x: x-dynm;
+    y: y-dynm;
+
+    inner-shadow-blur: 62px;
+    inner-shadow-color: black;
+
+    animate x, y {
+      duration: 300ms;
+      easing: ease-out;
+    }
+  }
+}

@@ -1,5 +1,8 @@
-import { TimeClock, Timecard } from "clock-and-timecard.slint";
+import { Timecard } from "timecard.slint";
+import { TimeClock } from "time-clock.slint";
 import { Animation } from "animations.slint";
+
+import { Button } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
   width: 600px;
@@ -27,12 +30,12 @@ export component AppWindow inherits Window {
       alignment: center;
 
       // time clock
-      TimeClock {
+      tc := TimeClock {
         transform-rotation: Animation.sway-idle1;
       }
 
       // timecard
-      Timecard {
+      tm := Timecard {
         transform-rotation: Animation.sway-idle2;
       }
     }

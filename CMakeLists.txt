@@ -24,7 +24,11 @@ else()
     add_executable(my_application src/main.cpp)
 endif()
 target_link_libraries(my_application PRIVATE Slint::Slint)
-slint_target_sources(my_application ui/app-window.slint)
+slint_target_sources(my_application
+        ui/app-window.slint
+        ui/time-clock.slint
+        ui/timecard.slint
+)
 # On Windows, copy the Slint DLL next to the application binary so that it's found.
 if (WIN32)
     add_custom_command(TARGET my_application POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:my_application> $<TARGET_FILE_DIR:my_application> COMMAND_EXPAND_LISTS)
