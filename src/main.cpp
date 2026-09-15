@@ -12,11 +12,12 @@ int main(int argc, char **argv)
 
 {
   std::filesystem::path fileName = ".firstrun";
-  bool firstRun = !std::filesystem::exists(fileName); // reverses so if its NOT found, then false instead of true
-  if (firstRun) {
+  if (bool firstRun = !std::filesystem::exists(fileName)) {
     std::ofstream file(fileName);
     file.close();
   }
+
+
 
   auto ui = AppWindow::create();
   ui->run();

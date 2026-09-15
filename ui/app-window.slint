@@ -5,8 +5,14 @@ import { Animation } from "animations.slint";
 import { Button } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
+  // bubbled properties
+  in-out property <angle> h-hand-angle <=> tc.transform-rotation;
+  in-out property <angle> m-hand-angle <=> tc.transform-rotation;
+
   width: 600px;
   height: 500px;
+
+  ta-root := TouchArea {}
 
   Image {
     opacity: 0.28;
@@ -21,7 +27,6 @@ export component AppWindow inherits Window {
   }
 
   VerticalLayout {
-    padding: 8px;
     alignment: center;
     HorizontalLayout  {
       height: root.height / 1.5;

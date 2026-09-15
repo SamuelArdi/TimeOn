@@ -2,13 +2,17 @@ import { Animation } from "animations.slint";
 import "../assets/fonts/the_display_st.ttf";
 
 export component TimeClock inherits Rectangle{
+  // bubble properties
+  in-out property <angle> h-hand-angle <=> h-hand.transform-rotation;
+  in-out property <angle> m-hand-angle <=> m-hand.transform-rotation;
+
   width: tc-img.width;
   height: tc-img.height;
 
   tc-area := TouchArea {
     mouse-cursor: not-allowed;
   }
-  
+
   property <length> x-dynm: tc-area.has-hover ? (200px - tc-area.mouse-x) * 0.1 - 3px : 0px;
   property <length> y-dynm: tc-area.has-hover ? (200px - tc-area.mouse-y) * 0.1 - 3px : 0px;
 
@@ -76,6 +80,15 @@ export component TimeClock inherits Rectangle{
     transform-rotation: Animation.m-hand-idle;
     transform-origin: {x: 20.4px, y: self.height / 2};
   }
+
+  // show hands angle
+  //Text {
+  //  text: ceil(mod(h-hand-angle / 1deg, 360));
+  //  y: 125px;
+  //}
+  //Text {
+  //  text: ceil(mod(m-hand-angle / 1deg, 360));
+  //}
 
   // inner shadow
   Rectangle {

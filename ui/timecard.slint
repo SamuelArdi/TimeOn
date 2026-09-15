@@ -1,4 +1,6 @@
 import "../assets/fonts/batangche.ttf";
+import "../assets/fonts/Priestacy.otf";
+import "../assets/fonts/hole-punch.otf";
 
 export component Timecard inherits Rectangle {
   width: tm-img.width;
@@ -6,8 +8,21 @@ export component Timecard inherits Rectangle {
 
   tm-area := TouchArea {
     mouse-cursor: pointer;
+
+    moved => {
+      self.x += (self.mouse-x - self.pressed-x);
+      self.y += (self.mouse-y - self.pressed-y);
+    }
+
+    pointer-event(event) => {
+      if (event.button == PointerEventButton.left && event.kind == PointerEventKind.up) {
+        self.x = 0;
+        self.y = 0;
+      }
+    }
   }
 
+  in-out property <bool> follow-mouse: tm-area.pressed;
   property <length> x-dynm: tm-area.has-hover ? (200px - tm-area.mouse-x) * 0.1 - 3px : 0px;
   property <length> y-dynm: tm-area.has-hover ? (200px - tm-area.mouse-y) * 0.1 - 3px : 0px;
 
@@ -16,23 +31,25 @@ export component Timecard inherits Rectangle {
     drop-shadow-color: black;
     drop-shadow-blur: 23px;
 
-    x: x-dynm;
-    y: y-dynm;
+    x: follow-mouse ? tm-area.x : x-dynm;
+    y: follow-mouse ? tm-area.y : y-dynm;
 
     animate x, y {
+      enabled: !follow-mouse;
       duration: 300ms;
       easing: ease-out;
     }
   }
 
   tm-img := Image {
-    x: x-dynm;
-    y: y-dynm;
+    x: follow-mouse ? tm-area.x : x-dynm;
+    y: follow-mouse ? tm-area.y : y-dynm;
 
     width: 200px;
     source: @image-url("../assets/images/timecard.jpg");
 
     animate x, y {
+      enabled: !follow-mouse;
       duration: 300ms;
       easing: ease-out;
     }
@@ -42,10 +59,54 @@ export component Timecard inherits Rectangle {
     x: (tm-img.x + tm-img.width) - 58px;
     y: tm-img.y - 8px;
 
-    text: "000";
+    text: 000;
     font-family: "BatangChe";
 
     font-size: 35px;
+  }
+
+  // TODO: change to TextInput
+  tm-name := TextInput {
+    x: tm-img.x + 32px;
+    y: tm-img.y + 24px;
+
+    height: 30px;
+
+    text: "Samuel Ardi Mengko";
+    font-size: 13px;
+    font-family: "Priestacy";
+  }
+
+  tm-month := Text {
+    x: tm-img.x + 32px;
+    y: tm-img.y + 50px;
+
+    height: 15px;
+
+    text: "MONTH";
+    font-family: "Hole Punch";
+  }
+
+  tm-week-start := Text {
+    x: tm-month.x + 75px;
+    y: tm-month.y;
+
+    height: 15px;
+
+    text: 14;
+    font-size: 12px;
+    font-family: "Hole Punch";
+  }
+
+  tm-week-end := Text {
+    x: tm-month.x + 118px;
+    y: tm-month.y;
+
+    height: 15px;
+
+    text: 18;
+    font-size: 12px;
+    font-family: "Hole Punch";
   }
 
   // inner shadow
@@ -53,13 +114,14 @@ export component Timecard inherits Rectangle {
     width: tm-img.width;
     height: tm-img.height;
 
-    x: x-dynm;
-    y: y-dynm;
+    x: follow-mouse ? tm-area.x : x-dynm;
+    y: follow-mouse ? tm-area.y : y-dynm;
 
     inner-shadow-blur: 62px;
     inner-shadow-color: black;
 
     animate x, y {
+      enabled: !follow-mouse;
       duration: 300ms;
       easing: ease-out;
     }
