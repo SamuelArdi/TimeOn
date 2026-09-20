@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.14)
 
-# Set the project name. This is not the executable program's name!
 project(timeon)
 
-# Try to find a locally installed raylib, but don't quit on fail
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
+foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${OUTPUTCONFIG} UPPERCONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${UPPERCONFIG} ${CMAKE_SOURCE_DIR})
+endforeach()
+
 find_package(raylib 6.0 QUIET)
 
-# This code downloads raylib into a directory called _deps and adds it as a subdirectory, compiling it with the program when running the build command
 include(FetchContent)
 if (NOT raylib_FOUND)
     FetchContent_Declare(
@@ -17,19 +20,17 @@ if (NOT raylib_FOUND)
     FetchContent_MakeAvailable(raylib)
 endif()
 
-# We don't want raylib's examples built. This option is picked up by raylib's CMakeLists.txt
+# dont build raylib's examples
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-# Here, the executable is declared with its sources. "main", or "main.exe" on windows will be the program's name
 add_executable(main
     "src/main.cpp"
 )
 
-# Link raylib to main
 target_link_libraries(main 
     raylib
 )
-# Make main find the <raylib.h> header (and others)
+
 target_include_directories(main PUBLIC
     "${raylib_SOURCE_DIR}/src"
     "src"
