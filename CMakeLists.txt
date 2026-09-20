@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 # Set the project name. This is not the executable program's name!
-project(graphical_template)
+project(timeon)
 
 # Try to find a locally installed raylib, but don't quit on fail
 find_package(raylib 6.0 QUIET)
