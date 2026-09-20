@@ -1,7 +1,1 @@
-.cache/**
-.vscode/*
-.idea/*
-
-tests/**
-build/*
-cmake-build-debug/*
+build/**

@@ -1,35 +1,36 @@
-cmake_minimum_required(VERSION 3.21)
-project(my_application LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.14)
 
-set(CMAKE_PREFIX_PATH C:\\Program Files\\Slint-cpp 1.17.1)
+# Set the project name. This is not the executable program's name!
+project(graphical_template)
 
-find_package(Slint QUIET)
-if (NOT Slint_FOUND)
-  message("Slint could not be located in the CMake module search path. Downloading it from Git and building it locally")
-  include(FetchContent)
-  FetchContent_Declare(
-    Slint
-    GIT_REPOSITORY https://github.com/slint-ui/slint.git
-    # `release/1` will auto-upgrade to the latest Slint >= 1.0.0 and < 2.0.0
-    # `release/1.0` will auto-upgrade to the latest Slint >= 1.0.0 and < 1.1.0
-    GIT_TAG release/1
-    SOURCE_SUBDIR api/cpp
-  )
-  FetchContent_MakeAvailable(Slint)
-endif (NOT Slint_FOUND)
+# Try to find a locally installed raylib, but don't quit on fail
+find_package(raylib 6.0 QUIET)
 
-if(ANDROID)
-    add_library(my_application SHARED src/main.cpp)
-else()
-    add_executable(my_application src/main.cpp)
+# This code downloads raylib into a directory called _deps and adds it as a subdirectory, compiling it with the program when running the build command
+include(FetchContent)
+if (NOT raylib_FOUND)
+    FetchContent_Declare(
+        raylib
+        URL https://github.com/raysan5/raylib/archive/refs/tags/6.0.tar.gz
+        DOWNLOAD_EXTRACT_TIMESTAMP True #This option is not required but suppresses a warning
+    )
+    FetchContent_MakeAvailable(raylib)
 endif()
-target_link_libraries(my_application PRIVATE Slint::Slint)
-slint_target_sources(my_application
-        ui/app-window.slint
-        ui/time-clock.slint
-        ui/timecard.slint
+
+# We don't want raylib's examples built. This option is picked up by raylib's CMakeLists.txt
+set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+# Here, the executable is declared with its sources. "main", or "main.exe" on windows will be the program's name
+add_executable(main
+    "src/main.cpp"
 )
-# On Windows, copy the Slint DLL next to the application binary so that it's found.
-if (WIN32)
-    add_custom_command(TARGET my_application POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:my_application> $<TARGET_FILE_DIR:my_application> COMMAND_EXPAND_LISTS)
-endif()
+
+# Link raylib to main
+target_link_libraries(main 
+    raylib
+)
+# Make main find the <raylib.h> header (and others)
+target_include_directories(main PUBLIC
+    "${raylib_SOURCE_DIR}/src"
+    "src"
+)
