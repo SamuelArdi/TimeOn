@@ -25,6 +25,7 @@ set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_executable(main
     "src/main.cpp"
+    src/helper.cpp
 )
 
 target_link_libraries(main 

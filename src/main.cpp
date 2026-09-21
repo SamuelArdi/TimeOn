@@ -1,4 +1,7 @@
 #include <raylib.h>
+#include <string>
+
+#include "helper.h"
 
 int main() {
   int screenWidth = 520;
@@ -7,14 +10,14 @@ int main() {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(screenWidth, screenHeight, "TimeOn");
 
-  Texture2D bg = LoadTexture("assets/images/bg.jpg");
-  Texture2D vhs = LoadTexture("assets/images/vhs_filter.jpg");
+  Texture2D texBg = LoadTexture("assets/images/bg.png");
+  Texture2D texVhs = LoadTexture("assets/images/vhs_filter.png");
 
-  Texture2D clock = LoadTexture("assets/images/rect_clock.png");
-  Texture2D hourHand = LoadTexture("assets/images/hour_hand.svg");
-  Texture2D minuteHand = LoadTexture("assets/images/minute_hand.svg");
+  Texture2D texClock = LoadTexture("assets/images/rect_clock.png");
+  Texture2D texHourHand = LoadTexture("assets/images/hour_hand.svg");
+  Texture2D texMinuteHand = LoadTexture("assets/images/minute_hand.svg");
   
-  Texture2D timecard = LoadTexture("assets/images/timecard.jpg");
+  Texture2D texTimecard = LoadTexture("assets/images/timecard.png");
 
   SetTargetFPS(60);
 
@@ -24,20 +27,23 @@ int main() {
     SetWindowMaxSize(1080, 1440);
 
     // update changes to the window size
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
+    if (IsWindowResized()) {
+      screenWidth = GetScreenWidth();
+      screenHeight = GetScreenHeight();
+    }
 
     BeginDrawing();
-      DrawTexture(bg, 0, 0, BLANK);
+      Rectangle recBg{(float)texBg.width/2, (float)texBg.height/2, (float)screenWidth, (float)screenHeight};
+      DrawTextureRec(texBg, recBg, { 0, 0 }, WHITE);
     EndDrawing();
   }
 
-  UnloadTexture(bg);
-  UnloadTexture(vhs);
-  UnloadTexture(clock);
-  UnloadTexture(hourHand);
-  UnloadTexture(minuteHand);
-  UnloadTexture(timecard);
+  UnloadTexture(texBg);
+  UnloadTexture(texVhs);
+  UnloadTexture(texClock);
+  UnloadTexture(texHourHand);
+  UnloadTexture(texMinuteHand);
+  UnloadTexture(texTimecard);
 
   CloseWindow();
   return 0;
