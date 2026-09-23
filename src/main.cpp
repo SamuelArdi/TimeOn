@@ -1,7 +1,9 @@
 #include <raylib.h>
-#include <string>
+#include <iostream>
 
 #include "helper.h"
+
+#define FPS 60
 
 int main() {
   int screenWidth = 520;
@@ -19,7 +21,7 @@ int main() {
   
   Texture2D texTimecard = LoadTexture("assets/images/timecard.png");
 
-  SetTargetFPS(60);
+  SetTargetFPS(FPS);
 
   while(!WindowShouldClose()) {
     // set the minimum and maximum window size
@@ -27,14 +29,23 @@ int main() {
     SetWindowMaxSize(1080, 1440);
 
     // update changes to the window size
-    if (IsWindowResized()) {
-      screenWidth = GetScreenWidth();
-      screenHeight = GetScreenHeight();
-    }
+    screenWidth = GetScreenWidth();
+    screenHeight = GetScreenHeight();
 
     BeginDrawing();
+      // bg
       Rectangle recBg{(float)texBg.width/2, (float)texBg.height/2, (float)screenWidth, (float)screenHeight};
       DrawTextureRec(texBg, recBg, { 0, 0 }, WHITE);
+
+      // clock
+      float temp = (float)screenWidth/stdForm((float)screenWidth);
+      DrawTextureEx(texClock, { (screenWidth/stdForm((float)screenWidth)), 0 }, 0.0f, normalize((float)screenWidth/1.8f), WHITE);
+
+      // timecard
+
+      // filter
+      Rectangle recVhs{0, 0, (float)screenWidth, (float)screenHeight};
+      DrawTextureRec(texVhs, recVhs, { 0, 0 }, { 255, 255, 255, 100 });
     EndDrawing();
   }
 

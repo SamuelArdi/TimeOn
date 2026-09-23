@@ -4,6 +4,7 @@
 #include <string>
 #include <math.h>
 
-float divideSize(int dim);
+float normalize(float dim);
+float stdForm(float num);
 
 #endif
